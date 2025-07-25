@@ -30,20 +30,19 @@ class LinkedList {
     }
 
     public int get(int index) {
-        if(isEmpty())
+        if (isEmpty()) 
             return -1;
-        else
-        {
-            int iCur = 0;
-            Node pCur = this.head;
-            while(iCur < index - 1)
-            {
-                if(pCur.next == null)
-                    return -1;
-                iCur++;
-                pCur = pCur.next;
-            }
+
+        int iCur = 0;
+        Node pCur = this.head;
+        while (iCur < index && pCur != null) {
+            iCur++;
+            pCur = pCur.next;
+        }
+        if (pCur != null) {
             return pCur.val;
+        } else {
+            return -1;
         }
     }
 
@@ -56,11 +55,25 @@ class LinkedList {
 
     public void insertTail(int val) {
         Node new_tail = new Node(val);
-        this.tail.next = new_tail;
-        this.tail = new_tail;
+        if (this.tail == null) {
+            this.head = new_tail;
+            this.tail = new_tail;
+        } else {
+            this.tail.next = new_tail;
+            this.tail = new_tail;
+        }
     }
 
     public boolean remove(int index) {
+        if (index == 0) {
+            if (this.head == null) 
+                return false;
+            this.head = this.head.next;
+            if (this.head == null) 
+                this.tail = null;
+            return true;
+        }
+
         int iCur = 0;
         Node pCur = this.head;
         while (iCur < index - 1 && pCur != null) {
